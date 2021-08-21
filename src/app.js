@@ -7,6 +7,8 @@ const session = require("express-session");
 const passport = require("passport");
 
 const path = require("path");
+// required routes
+const notesRoutes = require("./notes/routes/notes.routes");
 
 const createApp = () => {
   const app = express();
@@ -49,6 +51,7 @@ const createApp = () => {
   });
 
   // routes
+  app.use("/notes", notesRoutes);
 
   return app;
 };

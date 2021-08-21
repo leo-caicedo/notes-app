@@ -26,7 +26,7 @@ class NotesServices {
     const { id } = req.params;
 
     const note = await Note.findById(id).lean();
-    res.render("notes/edit-note", { task });
+    res.render("notes/edit-note", { note });
   }
   async updateNote(req, res) {
     const { id } = req.params;
