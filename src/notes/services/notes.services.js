@@ -4,7 +4,7 @@ const Note = require("../models/Note");
 class NotesServices {
   // list notes
   async getNotes(req, res) {
-    const notes = await Note.find({}).lean();
+    const notes = await Note.find({ user: req.user.id }).lean();
     res.render("notes/notes", { notes });
   }
 
@@ -16,6 +16,7 @@ class NotesServices {
     const { body: note } = req;
 
     const noteCreated = new Note(note);
+    noteCreated.user = req.user.id;
     await noteCreated.save();
     req.flash("success_msg", "Note added successfully");
     res.redirect("/notes");
@@ -26,6 +27,10 @@ class NotesServices {
     const { id } = req.params;
 
     const note = await Note.findById(id).lean();
+    if (note.user != req.user.id) {
+      req.flash("error_msg", "Not Authorized");
+      return res.redirect("/notes");
+    }
     res.render("notes/edit-note", { note });
   }
   async updateNote(req, res) {
@@ -33,7 +38,7 @@ class NotesServices {
     const { body: note } = req;
 
     await Note.findByIdAndUpdate(id, note);
-    req.flash("success_msg", "Task updated Succesfully");
+    req.flash("success_msg", "Note updated Succesfully");
     res.redirect("/notes");
   }
 
@@ -42,7 +47,7 @@ class NotesServices {
     const { id } = req.params;
 
     await Note.findByIdAndDelete(id);
-    req.flash("success_msg", "Task updated Succesfully");
+    req.flash("success_msg", "Note removed Succesfully");
     res.redirect("/notes");
   }
 }
