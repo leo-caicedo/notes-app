@@ -2,9 +2,10 @@ const { Router } = require("express");
 
 const router = Router();
 // services
-const UserServices = require("../services/users.users.services");
+const UserServices = require("../services/users.services");
 const userServices = new UserServices();
 
+router.get("/home", userServices.home);
 // auht
 router.get("/signup", userServices.signUpForm);
 router.post("/signup", userServices.signup);

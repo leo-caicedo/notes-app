@@ -3,6 +3,11 @@ const User = require("../models/User");
 const passport = require("passport");
 
 class UsersServices {
+  // home
+  home(req, res) {
+    res.render("/users/home");
+  }
+
   // signup
   signUpForm(req, res) {
     res.render("users/signup");

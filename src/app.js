@@ -9,6 +9,7 @@ const passport = require("passport");
 const path = require("path");
 // required routes
 const notesRoutes = require("./notes/routes/notes.routes");
+const usersRoutes = require("./users/routes/users.routes");
 
 const createApp = () => {
   const app = express();
@@ -52,6 +53,10 @@ const createApp = () => {
 
   // routes
   app.use("/notes", notesRoutes);
+  app.use("/user", usersRoutes);
+  app.get("/", (req, res) => {
+    res.redirect("/users/home");
+  });
 
   return app;
 };
