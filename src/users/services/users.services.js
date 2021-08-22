@@ -17,7 +17,7 @@ class UsersServices {
     const { username, password, confirm_password } = req.body;
 
     if (password != confirm_password) {
-      errors.push("Password does not match");
+      errors.push({text: "Password does not match"});
     }
     if (password.length < 8) {
       errors.push({ text: "Password must be at least 8 characters." });
