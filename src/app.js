@@ -7,6 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 
 const path = require("path");
+require("./utils/passport");
 // required routes
 const notesRoutes = require("./notes/routes/notes.routes");
 const usersRoutes = require("./users/routes/users.routes");
@@ -53,10 +54,13 @@ const createApp = () => {
 
   // routes
   app.use("/notes", notesRoutes);
-  app.use("/user", usersRoutes);
+  app.use("/users", usersRoutes);
   app.get("/", (req, res) => {
     res.redirect("/users/home");
   });
+
+  // static files
+  app.use(express.static(path.join(__dirname, "public")));
 
   return app;
 };
