@@ -1,19 +1,21 @@
 const { Router } = require("express");
 
 const router = Router();
+// middleware
+const auth = require("../../utils/auth")
 // services
 const NotesServices = require("../services/notes.services");
 const notesServices = new NotesServices();
 
 // list notes
-router.get("/", notesServices.getNotes);
+router.get("/", auth, notesServices.getNotes);
 // create note
-router.get("/new", notesServices.noteForm);
-router.post("/new", notesServices.createNote);
+router.get("/new", auth, notesServices.noteForm);
+router.post("/new", auth, notesServices.createNote);
 // update note
-router.get("/edit/:id", notesServices.editForm);
-router.put("/edit/:id", notesServices.updateNote);
+router.get("/edit/:id", auth, notesServices.editForm);
+router.put("/edit/:id", auth, notesServices.updateNote);
 // delete note
-router.delete("/:id", notesServices.deleteNote);
+router.delete("/:id", auth, notesServices.deleteNote);
 
 module.exports = router;
